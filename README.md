@@ -14,13 +14,21 @@
 [x] - add copy of the .map file for the current chip positions to the /data/ folder
     - need a completely unfiltered map file, with the full list of 220k SNPs.
     - `CIGENE_220K_SNPlocation_majorminor.txt` Even better, has the relevant info for the alleles so no ped file needed!
+    - COLUMNS: POS MAJOR   MINOR   CHR INDEX   SNP
 
 [] - build a key / dictonary file with the names of the chromosomes from the three files, make sure they're matched unambigiously
+    OLD_genome_chr_names.txt, NEW_genome_chr_names.txt, and unique of `CIGENE_220K_SNPlocation_majorminor.txt` CHR
+
+
 
 [] - write a program to create a new fasta file from the old genome file and the map file
         - this step will need some programming 
         - take 100bp up and downstream of the exact SNP position
         - make a header with : >"SNP_NAME";"MAJOR";"MINOR"
+        - EDGE case - old scaffolds, append them together linearly to make a singe CHR30 and work off the POS information from there.
+        - Will need to handle the new scaffolds as well, placing things onto CHR 30
+            -probably just want a function to do this.
+
 
 [] - run bwa (on sharcnet), aligning the fasta file from previous step to the v3 genome
 
