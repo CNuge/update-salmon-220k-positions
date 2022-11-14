@@ -1,15 +1,21 @@
 # update-salmon-220k-positions
 ## Orient the SNPs from the Atlantic salmon 220K chip in v3 of the Atlantic salmon genome
 
-## The plan
+## The plan:
 
 [] - Set up repository on compute canada
 
-[] - get copy of the v3 Atlantic salmon genome downloaded and added to /data/ folder
+[x] - get copy of the v3 Atlantic salmon genome downloaded and added to /data/ folder
+        -`NEW-GCF_905237065.1_Ssal_v3.1_genomic.fna`
 
-[] - add copy of the v2 (current) genome to the /data/ folder
+[x] - add copy of the v2 (current) genome to the /data/ folder
+        -`OLD-GCA_000233375.4_ICSASG_v2_genomic.fna`
 
-[] - add copy of the .map file for the current chip positions to the /data/ folder
+[x] - add copy of the .map file for the current chip positions to the /data/ folder
+    - need a completely unfiltered map file, with the full list of 220k SNPs.
+    - `CIGENE_220K_SNPlocation_majorminor.txt` Even better, has the relevant info for the alleles so no ped file needed!
+
+[] - build a key / dictonary file with the names of the chromosomes from the three files, make sure they're matched unambigiously
 
 [] - write a program to create a new fasta file from the old genome file and the map file
         - this step will need some programming 
@@ -28,3 +34,13 @@
 
 [] - from here, carry the new information through to the salmon pop gen work, redoing the manhattan plots for the Fst, the LD calculations, and anything else required.
     -need to double check the orders of the SNPs, sort the final map file by their original positions (so that no weird bugs get introduced)
+
+
+## Things to test for / keep an eye on
+
+- confirm that the fasta files have the SNPs in the 101st (of 201) bp positions. Spot check a few and make sure the major alleles are there.
+
+- when you have the final bp positions in the new genome, spot check the file to make sure that the alleles for the SNP are in fact found at the specific bp indicated. 
+
+- make sure the chromosome names are matched on the front and back end correctly, keep an eye out for any weird changes or things that are out of order in the files.
+    -  don't assume positional equivalency, get eyes on all the name matches
