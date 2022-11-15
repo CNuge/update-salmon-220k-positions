@@ -20,12 +20,12 @@
     OLD_genome_chr_names.txt, NEW_genome_chr_names.txt, and unique of `CIGENE_220K_SNPlocation_majorminor.txt` CHR
 
 
-
-[] - write a program to create a new fasta file from the old genome file and the map file
+[x] - write a program to create a new fasta file from the old genome file and the map file
         - this step will need some programming 
         - take 100bp up and downstream of the exact SNP position
         - make a header with : >"SNP_NAME";"MAJOR";"MINOR"
         - EDGE case - old scaffolds, append them together linearly to make a singe CHR30 and work off the POS information from there.
+            - not positioned, therefore I'm going off the 70mers from the affy file for these SNPs.
         - Will need to handle the new scaffolds as well, placing things onto CHR 30
             -probably just want a function to do this.
 
