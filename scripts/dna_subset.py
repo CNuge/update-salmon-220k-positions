@@ -97,7 +97,7 @@ def subset_snp_from_genome(chr, pos, genome, flank = 100):
     #literal edge cases - late in chr
     elif adj_pos >= (len(chr_seq) - flank):
         front_edge = pos - flank
-        back_edge = len(back_ex_chr)
+        back_edge = len(chr_seq)
         snp_pos = flank + 1
     #normal case - plenty of flank
     else:
