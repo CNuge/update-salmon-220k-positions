@@ -1,4 +1,4 @@
-
+import re
 
 #header = ">CM003279.1 Salmo salar isolate Sally breed double haploid chromosome ssa01, whole genome shotgun sequence"
 def subset_v2_chr_header(header):

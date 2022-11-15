@@ -1,5 +1,4 @@
 import gc
-import re
 
 import pandas as pd
 from seqio import read_fasta, write_fasta
