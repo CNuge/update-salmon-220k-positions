@@ -53,3 +53,6 @@
 
 - make sure the chromosome names are matched on the front and back end correctly, keep an eye out for any weird changes or things that are out of order in the files.
     -  don't assume positional equivalency, get eyes on all the name matches
+
+- *** IF THE ALIGNMENT IS A REVERSE COMPLIMENT, MAKE SURE YOU SWITCH THE MAJOR/MINOR ALLELES TO THEIR REVERSE COMPLIMENTS WHEN YOU GENERATE THE OUTPUT
+    - want the sequences to stay consistent.

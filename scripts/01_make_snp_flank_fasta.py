@@ -1,52 +1,96 @@
 import gc
+import re
+
 import pandas as pd
 from seqio import read_fasta, write_fasta
+from dna_subset import subset_v2_chr_header, build_genome_dict
+from dna_subset import subset_snp_from_genome, affy_to_major_seq
 
 
-#header = ">CM003279.1 Salmo salar isolate Sally breed double haploid chromosome ssa01, whole genome shotgun sequence"
-def subset_v2_chr_header(header):
-    """Take a long form header from the chr 2 genome 
-        and subset just the ssa style chr designation."""
-    front = header.split(',')[0]
-    chrom = front.split("haploid chromosome ")[-1]
+#check this part carefully to avoid off by one errors!
+def subset_snp_from_genome(chr, pos, genome):
+    chr_key = f"ssa{int(chr)}"
+    chr_seq = genome[chr_key]
 
-    if chrom[:3] != "ssa":
-        raise ValueError(f"Warning header subset does not conform to chr"+\
-                            "naming convention: {chrom}")
+    #literal edge cases
+    if pos < 101 :
+        front_edge = 0
+        back_edge = 
+        snp_pos = pos
+        
+    elif pos >= (len(chr_seq) - 100):
+        front_edge = 
+        back_edge = 
+        snp_pos = 101
 
-    return chr
+    else:
+        front_edge = 
+        back_edge = 
+        snp_pos = 101
 
 
-def build_subset_dict(genome_dict, merged_scaffold_name= "ssa30"):
-    """Take a dictonary of fasta entries, simplify the chromosome names, and 
-        merge all of the unplaced scaffolds (in order) to make an additional pseudochromosome"""
-    subset_dict = {}
-    for k, v in genome_dict.items():
-        if "chromosome ssa" in k:
-            new_k = subset_v2_chr_header(k)
-            subset_dict[new_k] = v
-
-        elif merged_scaffold_name in subset_dict.keys():
-            subset_dict[merged_scaffold_name] += v
-            
-        else:
-            subset_dict[merged_scaffold_name] = v
-
-    return subset_dict
-
+    return snp_seq, snp_pos
 
 if __name__ == "__main__":
 
+    #the names, alleles, and locations
     SNP_INPUT = "../data/CIGENE_220K_SNPlocation_majorminor.txt"
+    #the full DNA
     GENOME_INPUT = "../data/OLD-GCA_000233375.4_ICSASG_v2_genomic.fna"
+    #the 70mers, for unplaced SNPs and double check of the subsetting
+    ALT_SNP_DNA = "../data/Axiom_Ssa_220k_Annotation_trimmed.csv"
 
     snp_data = pd.read_csv(SNP_INPUT, sep = "\t")
+    affy_70mer_data = pd.read_csv(ALT_SNP_DNA)
+
+    #7 NAs, just turning them to chr 30 as these have no position info
+    snp_data.CHR[snp_data.CHR.isna()] = 30.0
+ 
+    #1875 SNPs with no locations, get these from the 70mer file
+    snp_data[snp_data.CHR == 30]
 
     #will have long headers, and the scaffolds are not appended
     raw_v2_genome_data = read_fasta(GENOME_INPUT)
 
-    v2_genome_cleaned = build_subset_dict(raw_v2_genome_data)
+    v2_genome_cleaned = build_genome_dict(raw_v2_genome_data)
     raw_v2_genome_data = []
     gc.collect()
 
-    
+
+def build_placed_snp_seqs(snp_data, affy_70mer_data, v2_genome_cleaned):
+    # iterate across the list of snps
+    # if placed, then subset a 201mer from the given chromosome
+    # if unplaced, then pull the 70mer from the affy file
+    # for each, make nested dict entry of:  {snp : {index:, seq:, major:, minor:, snp_pos:}}
+    snp_out_data = {}
+    bad_snps = []
+
+    for i, data in snp_data.iterrows():
+        if data['CHR'] != 30:
+            #subset a 201mer from the given chromosome 
+            snp_seq, snp_pos = subset_snp_from_genome( data['CHR'], 
+                                                        data['POS'], 
+                                                        genome)
+            snp_out_data[data['SNP']] = {
+                'seq' : snp_seq,
+                'index' : data['INDEX'],
+                'major' : data['MAJOR'],
+                'minor' : data['MINOR'],
+                'snp_pos': snp_pos,
+            }
+
+        else:
+            #get the 70mer from the affy data
+            affy_entry = affy_70mer_data[affy_70mer_data['SNP'] == data['SNP']].iloc[0].to_dict()            
+            try:
+                snp_seq, major, minor = affy_to_major_seq(affy_entry['Flankk'])
+                snp_out_data[data['SNP']] = {
+                    'seq' : snp_seq,
+                    'index' : data['INDEX'],
+                    'major' : major,
+                    'minor' : minor,
+                    'snp_pos': 36, #35 leading, snp, 34 trailing is the format
+                }
+
+            except:
+                bad_snps.append(data)
