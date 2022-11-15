@@ -1,8 +1,7 @@
 import gc
-
 import pandas as pd
 from seqio import read_fasta, write_fasta
-from dna_subset import subset_v2_chr_header, build_genome_dict
+from dna_subset import build_genome_dict
 from dna_subset import subset_snp_from_genome, affy_to_major_seq
 
 def build_placed_snp_seqs(snp_data, affy_70mer_data, genome):
@@ -40,8 +39,9 @@ def build_placed_snp_seqs(snp_data, affy_70mer_data, genome):
             except:
                 bad_snps.append(data)
     return snp_out_data, bad_snps
-if __name__ == "__main__":
 
+
+if __name__ == "__main__":
     #the names, alleles, and locations
     SNP_INPUT = "../data/CIGENE_220K_SNPlocation_majorminor.txt"
     #the full DNA
@@ -55,8 +55,8 @@ if __name__ == "__main__":
     #7 NAs, just turning them to chr 30 as these have no position info
     snp_data.CHR[snp_data.CHR.isna()] = 30.0
  
-    #1875 SNPs with no locations, get these from the 70mer file
-    snp_data[snp_data.CHR == 30]
+    ## 1875 SNPs with no locations, get these from the 70mer file
+    # snp_data[snp_data.CHR == 30]
 
     #will have long headers, and the scaffolds are not appended
     raw_v2_genome_data = read_fasta(GENOME_INPUT)

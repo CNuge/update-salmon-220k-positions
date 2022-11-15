@@ -13,12 +13,16 @@ def subset_v2_chr_header(header):
 
     return chr
 
-def build_genome_dict(genome_dict):
+def build_genome_dict(genome_list):
     """Take a dictonary of fasta entries, simplify the chromosome names.
         Drops the unnplaced scaffolds"""
     subset_dict = {}
-    for k, v in genome_dict.items():
-        if "chromosome ssa" in k:
+
+    for x in genome_list:
+        desc = x['description']
+        if "chromosome ssa" in desc:
+            k = x['name'] 
+            v = x['sequence']
             new_k = subset_v2_chr_header(k)
             subset_dict[new_k] = v
     return subset_dict
@@ -40,9 +44,7 @@ def affy_to_major_seq(seq):
 
     #split on: [ ] and /
     s1, minor, major, s2 = res = re.split('\[|\]|\/', seq)
-
     outseq = s1+major+s2
-
     return outseq, major, minor
 
 
