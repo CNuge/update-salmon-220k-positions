@@ -6,12 +6,10 @@ def subset_v2_chr_header(header):
         and subset just the ssa style chr designation."""
     front = header.split(',')[0]
     chrom = front.split("haploid chromosome ")[-1]
-
     if chrom[:3] != "ssa":
         raise ValueError(f"Warning header subset does not conform to chr"+\
                             "naming convention: {chrom}")
-
-    return chrom
+    return int(chrom[3:])
 
 def build_genome_dict(genome_list):
     """Take a dictonary of fasta entries, simplify the chromosome names.
@@ -42,7 +40,7 @@ def affy_to_major_seq(seq):
         First allele is minor, second is major."""
 
     #split on: [ ] and /
-    s1, minor, major, s2 = res = re.split('\[|\]|\/', seq)
+    s1, minor, major, s2 = re.split('\[|\]|\/', seq)
     outseq = s1+major+s2
     return outseq, major, minor
 
@@ -82,13 +80,12 @@ assert back_ex_chr[front_edge:back_edge][100] == "C"
 assert len(back_ex_chr[front_edge:back_edge]) == 156
 """
 
-def subset_snp_from_genome(chr, pos, genome, flank = 100):
+def subset_snp_from_genome(chrom, pos, genome, flank = 100):
     """Take a SNP position and a given chromosome 
         and subset a the snp with flanks of the given size.
         
         Input position is assumed to be 1 indexed (and is converted to 0 index)"""
-    chr_key = f"ssa{int(chr)}"
-    chr_seq = genome[chr_key]
+    chr_seq = genome[chrom]
     adj_pos = pos - 1
     #literal edge cases - early in chr
     if adj_pos < flank :
