@@ -15,6 +15,7 @@
     - need a completely unfiltered map file, with the full list of 220k SNPs.
     - `CIGENE_220K_SNPlocation_majorminor.txt` Even better, has the relevant info for the alleles so no ped file needed!
     - COLUMNS: POS MAJOR   MINOR   CHR INDEX   SNP
+[] confirm the major minor order above, I'm suspicious about it so emailed Tony for double check of that assumption.
 
 [] - build a key / dictonary file with the names of the chromosomes from the three files, make sure they're matched unambigiously
     OLD_genome_chr_names.txt, NEW_genome_chr_names.txt, and unique of `CIGENE_220K_SNPlocation_majorminor.txt` CHR
