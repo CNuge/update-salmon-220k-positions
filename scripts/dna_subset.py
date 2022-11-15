@@ -11,7 +11,7 @@ def subset_v2_chr_header(header):
         raise ValueError(f"Warning header subset does not conform to chr"+\
                             "naming convention: {chrom}")
 
-    return chr
+    return chrom
 
 def build_genome_dict(genome_list):
     """Take a dictonary of fasta entries, simplify the chromosome names.
@@ -21,10 +21,9 @@ def build_genome_dict(genome_list):
     for x in genome_list:
         desc = x['description']
         if "chromosome ssa" in desc:
-            k = x['name'] 
-            v = x['sequence']
-            new_k = subset_v2_chr_header(d)
-            subset_dict[new_k] = v
+            seq = x['sequence']
+            new_k = subset_v2_chr_header(desc)
+            subset_dict[new_k] = seq
     return subset_dict
 
 # omitted as there are no exactly placed snps from the scaffolds
