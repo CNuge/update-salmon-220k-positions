@@ -6,31 +6,41 @@ from seqio import read_fasta, write_fasta
 from dna_subset import subset_v2_chr_header, build_genome_dict
 from dna_subset import subset_snp_from_genome, affy_to_major_seq
 
-
-#check this part carefully to avoid off by one errors!
-def subset_snp_from_genome(chr, pos, genome):
-    chr_key = f"ssa{int(chr)}"
-    chr_seq = genome[chr_key]
-
-    #literal edge cases
-    if pos < 101 :
-        front_edge = 0
-        back_edge = 
-        snp_pos = pos
-        
-    elif pos >= (len(chr_seq) - 100):
-        front_edge = 
-        back_edge = 
-        snp_pos = 101
-
-    else:
-        front_edge = 
-        back_edge = 
-        snp_pos = 101
-
-
-    return snp_seq, snp_pos
-
+def build_placed_snp_seqs(snp_data, affy_70mer_data, genome):
+    """ iterate across the list of snps
+            if placed, then subset a 201mer from the given chromosome
+            if unplaced, then pull the 70mer from the affy file
+        for each, make nested dict entry of:  {snp : {index:, seq:, major:, minor:, snp_pos:}}
+        returns the nested dict, and a list of failed snps
+    """
+    snp_out_data = {}
+    bad_snps = []
+    for _, data in snp_data.iterrows():
+        if data['CHR'] != 30:
+            #subset a 201mer from the given chromosome 
+            snp_seq, snp_pos = subset_snp_from_genome( data['CHR'], 
+                                                        data['POS'], 
+                                                        genome)
+            snp_out_data[data['SNP']] = {
+                'seq' : snp_seq,
+                'index' : data['INDEX'],
+                'major' : data['MAJOR'],
+                'minor' : data['MINOR'],
+                'snp_pos': snp_pos,}
+        else:
+            #get the 70mer from the affy data
+            affy_entry = affy_70mer_data[affy_70mer_data['SNP'] == data['SNP']].iloc[0].to_dict()            
+            try:
+                snp_seq, major, minor = affy_to_major_seq(affy_entry['Flankk'])
+                snp_out_data[data['SNP']] = {
+                    'seq' : snp_seq,
+                    'index' : data['INDEX'],
+                    'major' : major,
+                    'minor' : minor,
+                    'snp_pos': 36,} #35 leading, snp, 34 trailing is the format
+            except:
+                bad_snps.append(data)
+    return snp_out_data, bad_snps
 if __name__ == "__main__":
 
     #the names, alleles, and locations
@@ -56,41 +66,10 @@ if __name__ == "__main__":
     raw_v2_genome_data = []
     gc.collect()
 
+    snp_out_data_dict, bad_data = build_placed_snp_seqs(snp_data, 
+                                                        affy_70mer_data, 
+                                                        v2_genome_cleaned)
 
-def build_placed_snp_seqs(snp_data, affy_70mer_data, v2_genome_cleaned):
-    # iterate across the list of snps
-    # if placed, then subset a 201mer from the given chromosome
-    # if unplaced, then pull the 70mer from the affy file
-    # for each, make nested dict entry of:  {snp : {index:, seq:, major:, minor:, snp_pos:}}
-    snp_out_data = {}
-    bad_snps = []
+    #from here, make the header : seq pairs from the snp_out_data_dict
+    #and then write to a fasta file for bwa
 
-    for i, data in snp_data.iterrows():
-        if data['CHR'] != 30:
-            #subset a 201mer from the given chromosome 
-            snp_seq, snp_pos = subset_snp_from_genome( data['CHR'], 
-                                                        data['POS'], 
-                                                        genome)
-            snp_out_data[data['SNP']] = {
-                'seq' : snp_seq,
-                'index' : data['INDEX'],
-                'major' : data['MAJOR'],
-                'minor' : data['MINOR'],
-                'snp_pos': snp_pos,
-            }
-
-        else:
-            #get the 70mer from the affy data
-            affy_entry = affy_70mer_data[affy_70mer_data['SNP'] == data['SNP']].iloc[0].to_dict()            
-            try:
-                snp_seq, major, minor = affy_to_major_seq(affy_entry['Flankk'])
-                snp_out_data[data['SNP']] = {
-                    'seq' : snp_seq,
-                    'index' : data['INDEX'],
-                    'major' : major,
-                    'minor' : minor,
-                    'snp_pos': 36, #35 leading, snp, 34 trailing is the format
-                }
-
-            except:
-                bad_snps.append(data)
