@@ -81,25 +81,28 @@ assert back_ex_chr[front_edge:back_edge][100] == "C"
 assert len(back_ex_chr[front_edge:back_edge]) == 156
 """
 
-#check this part carefully to avoid off by one errors!
-def subset_snp_from_genome(chr, pos, genome):
+def subset_snp_from_genome(chr, pos, genome, flank = 100):
+    """Take a SNP position and a given chromosome 
+        and subset a the snp with flanks of the given size.
+        
+        Input position is assumed to be 1 indexed (and is converted to 0 index)"""
     chr_key = f"ssa{int(chr)}"
     chr_seq = genome[chr_key]
     adj_pos = pos - 1
     #literal edge cases - early in chr
-    if adj_pos < 100 :
+    if adj_pos < flank :
         front_edge = 0
-        back_edge = adj_pos + 101
-        snp_pos = adj_pos + 1
+        back_edge = adj_pos + flank + 1
+        snp_pos = adj_pos + 1 #converts it back to 1 index for output
     #literal edge cases - late in chr
-    elif adj_pos >= (len(chr_seq) - 100):
-        front_edge = pos - 100
+    elif adj_pos >= (len(chr_seq) - flank):
+        front_edge = pos - flank
         back_edge = len(back_ex_chr)
-        snp_pos = 101
+        snp_pos = flank + 1
     #normal case - plenty of flank
     else:
-        front_edge = pos - 100
-        back_edge = pos + 101
-        snp_pos = 101
+        front_edge = adj_pos - flank
+        back_edge = adj_pos + flank + 1
+        snp_pos = flank + 1
     snp_seq = chr_seq[front_edge:back_edge]
     return snp_seq, snp_pos
