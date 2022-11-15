@@ -47,6 +47,7 @@
 ## Things to test for / keep an eye on
 
 - confirm that the fasta files have the SNPs in the 101st (of 201) bp positions. Spot check a few and make sure the major alleles are there.
+    - check against the file: `Axiom_Ssa_220k_Annotation_trimmed.csv` which appears to have the affymetrix primers for the SNPs
 
 - when you have the final bp positions in the new genome, spot check the file to make sure that the alleles for the SNP are in fact found at the specific bp indicated. 
 
