@@ -3,7 +3,7 @@
 
 ## The plan:
 
-[] - Set up repository on compute canada
+[x] - Set up repository on compute canada
 
 [x] - get copy of the v3 Atlantic salmon genome downloaded and added to /data/ folder
         -`NEW-GCF_905237065.1_Ssal_v3.1_genomic.fna`
@@ -29,6 +29,8 @@
         - Will need to handle the new scaffolds as well, placing things onto CHR 30
             -probably just want a function to do this.
 
+[] - spot checks to make sure the SNPs are where the fasta says they are
+    - make sure major allele is sitting at the 101st or 36th base pair depending on the two categories
 
 [] - run bwa (on sharcnet), aligning the fasta file from previous step to the v3 genome
 
