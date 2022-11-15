@@ -59,10 +59,11 @@ if __name__ == "__main__":
     # snp_data[snp_data.CHR == 30]
 
     #will have long headers, and the scaffolds are not appended
-    raw_v2_genome_data = read_fasta(GENOME_INPUT)
-
+    raw_v2_genome_data = read_fasta(GENOME_INPUT, return_description = True)
+    len(raw_v2_genome_data)
+    
     v2_genome_cleaned = build_genome_dict(raw_v2_genome_data)
-    raw_v2_genome_data = []
+    #raw_v2_genome_data = []
     gc.collect()
 
     snp_out_data_dict, bad_data = build_placed_snp_seqs(snp_data, 

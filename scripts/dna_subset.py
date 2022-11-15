@@ -1,6 +1,6 @@
 import re
 
-#header = ">CM003279.1 Salmo salar isolate Sally breed double haploid chromosome ssa01, whole genome shotgun sequence"
+#header = "Salmo salar isolate Sally breed double haploid chromosome ssa01, whole genome shotgun sequence"
 def subset_v2_chr_header(header):
     """Take a long form header from the chr 2 genome 
         and subset just the ssa style chr designation."""
@@ -23,7 +23,7 @@ def build_genome_dict(genome_list):
         if "chromosome ssa" in desc:
             k = x['name'] 
             v = x['sequence']
-            new_k = subset_v2_chr_header(k)
+            new_k = subset_v2_chr_header(d)
             subset_dict[new_k] = v
     return subset_dict
 
