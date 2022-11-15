@@ -13,7 +13,9 @@ def build_placed_snp_seqs(snp_data, affy_70mer_data, genome):
     """
     snp_out_data = {}
     bad_snps = []
-    for _, data in snp_data.iterrows():
+    for i, data in snp_data.iterrows():
+        if i % 10000 == 0: 
+            print(f"on snp number: {i}")
         if data['CHR'] != 30:
             #subset a 201mer from the given chromosome 
             snp_seq, snp_pos = subset_snp_from_genome( data['CHR'], 
@@ -29,7 +31,7 @@ def build_placed_snp_seqs(snp_data, affy_70mer_data, genome):
             #get the 70mer from the affy data
             affy_entry = affy_70mer_data[affy_70mer_data['SNP'] == data['SNP']].iloc[0].to_dict()            
             try:
-                snp_seq, major, minor = affy_to_major_seq(affy_entry['Flankk'])
+                snp_seq, major, minor = affy_to_major_seq(affy_entry['Flank'])
                 snp_out_data[data['SNP']] = {
                     'seq' : snp_seq,
                     'index' : data['INDEX'],
@@ -61,15 +63,27 @@ if __name__ == "__main__":
     #will have long headers, and the scaffolds are not appended
     raw_v2_genome_data = read_fasta(GENOME_INPUT, return_description = True)
     len(raw_v2_genome_data)
-    
+    raw_v2_genome_data[0].keys()
+
     v2_genome_cleaned = build_genome_dict(raw_v2_genome_data)
-    #raw_v2_genome_data = []
+    raw_v2_genome_data = []
     gc.collect()
 
     snp_out_data_dict, bad_data = build_placed_snp_seqs(snp_data, 
                                                         affy_70mer_data, 
                                                         v2_genome_cleaned)
 
+    #len(snp_out_data_dict) # all 220k have data
     #from here, make the header : seq pairs from the snp_out_data_dict
     #and then write to a fasta file for bwa
 
+    snp_out_list = []
+
+    for snp, data in snp_out_data_dict.items():
+        snp_dict = {"name" : f"{snp}\tSNP_NUMBER {data['index']};MAJOR {data['major']};MINOR {data['minor']};SEQ_POS {data['snp_pos']}",
+                    "sequence" : data["seq"]}
+        snp_out_list.append(snp_dict)
+
+    write_fasta(snp_out_list, "../data/snp_sequence_records_220k.fasta")
+
+    #write the bad snps to a file as well.
