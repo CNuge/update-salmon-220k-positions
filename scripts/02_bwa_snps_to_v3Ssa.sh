@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=0-02:00 # time (DD-HH:MM)
+#SBATCH --time=0-12:00 # time (DD-HH:MM)
 #SBATCH --job-name=bwa_mem_v_genome
 #SBATCH --output=logs/bwa_mem_v_genome_%J.out
 #SBATCH --cpus-per-task=32
