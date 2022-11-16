@@ -3,20 +3,19 @@ loading necessary modules
 Lmod is automatically replacing "intel/2020.1.217" with "gcc/9.3.0".
 
 
-Due to MODULEPATH changes, the following have been reloaded:
-  1) openmpi/4.0.3
+Lmod is automatically replacing "intel/2020.1.217" with "gcc/9.3.0".
 
 path to the genome file: ../data/NEW-GCF_905237065.1_Ssal_v3.1_genomic.fna
 path to the snp fasta file to be processed: ../data/snp_sequence_records_220k.fasta
 number of cores being used: 32
 writing outputs to folder: ../data/alignment_outputs/
-saving data to file: 220ksnps_align_v3_ssa_genome.sam
+saving data to file: ../data/alignment_outputs/220ksnps_align_v3_ssa_genome.sam
 [M::bwa_idx_load_from_disk] read 0 ALT contigs
 [M::process] read 440000 sequences (87948722 bp)...
-[M::mem_process_seqs] Processed 440000 reads in 114.118 CPU sec, 4.009 real sec
+[M::mem_process_seqs] Processed 440000 reads in 114.335 CPU sec, 3.997 real sec
 [main] Version: 0.7.17-r1188
 [main] CMD: bwa mem -t 32 ../data/NEW-GCF_905237065.1_Ssal_v3.1_genomic.fna ../data/snp_sequence_records_220k.fasta
-[main] Real time: 15.839 sec; CPU: 121.067 sec
+[main] Real time: 16.987 sec; CPU: 121.205 sec
 [bam_sort] Use -T PREFIX / -o FILE to specify temporary and final output files
 Usage: samtools sort [options...] [in.bam]
 Options:
