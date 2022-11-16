@@ -1,10 +1,9 @@
 #!/bin/bash
-#SBATCH --time=3-00:00 # time (DD-HH:MM)
+#SBATCH --time=0-02:00 # time (DD-HH:MM)
 #SBATCH --job-name=bwa_mem_v_genome
-#SBATCH --output=logs/v2_bwa_mem_v_genome_%J.out
+#SBATCH --output=logs/bwa_mem_v_genome_%J.out
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=125G
-#SBATCH --mail-type=ALL
 
 #add the scripts folder to the search path
 export PATH="$PATH:$(pwd)/bin"
@@ -25,20 +24,23 @@ cores=32 #make this equal to the cpus-per-task argument given to sbatch on line 
 #location where the alignment outputs should be saved to (in sorted bam format)
 #by default to a subfolder in original data directory with name bamfiles/
 out_folder="../data/alignment_outputs/"
+out_file="220ksnps_align_v3_ssa_genome"
 
 echo "path to the genome file: $genome_file";
 echo "path to the snp fasta file to be processed: $snp_file";
 echo "number of cores being used: $cores";
 echo "writing outputs to folder: $out_folder"
 
+#build the output folder if non existant
 if [ ! -d $outfolder ]; then
   mkdir -p $outfolder;
 fi
 
+#index the reference file
 bwa index $genome_file
 
-bam_outfile=$outfolder$f".bam";	 # the name of the .bam output
-bam_sorted_outfile=$outfolder$f".sorted.bam";	 # the name of the .bam output
+bam_outfile=$outfolder$out_file".bam";	 # the name of the .bam output
+bam_sorted_outfile=$outfolder$out_file".sorted.bam";	 # the name of the .bam output
 
 echo "saving data to file:" $bam_outfile;
 

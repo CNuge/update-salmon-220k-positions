@@ -8,7 +8,8 @@ def build_placed_snp_seqs(snp_data, affy_70mer_data, genome):
     """ iterate across the list of snps
             if placed, then subset a 201mer from the given chromosome
             if unplaced, then pull the 70mer from the affy file
-        for each, make nested dict entry of:  {snp : {index:, seq:, major:, minor:, snp_pos:}}
+        for each, make nested dict entry of:  
+            {snp : {index:, seq:, major:, minor:, snp_pos:}}
         returns the nested dict, and a list of failed snps
     """
     snp_out_data = {}
