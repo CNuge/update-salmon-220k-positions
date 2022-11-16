@@ -1,0 +1,48 @@
+loading necessary modules
+
+Lmod is automatically replacing "intel/2020.1.217" with "gcc/9.3.0".
+
+
+Due to MODULEPATH changes, the following have been reloaded:
+  1) openmpi/4.0.3
+
+path to the genome file: ../data/NEW-GCF_905237065.1_Ssal_v3.1_genomic.fna
+path to the snp fasta file to be processed: ../data/snp_sequence_records_220k.fasta
+number of cores being used: 32
+writing outputs to folder: ../data/alignment_outputs/
+saving data to file: 220ksnps_align_v3_ssa_genome.sam
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 440000 sequences (87948722 bp)...
+[M::mem_process_seqs] Processed 440000 reads in 114.118 CPU sec, 4.009 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 32 ../data/NEW-GCF_905237065.1_Ssal_v3.1_genomic.fna ../data/snp_sequence_records_220k.fasta
+[main] Real time: 15.839 sec; CPU: 121.067 sec
+[bam_sort] Use -T PREFIX / -o FILE to specify temporary and final output files
+Usage: samtools sort [options...] [in.bam]
+Options:
+  -l INT     Set compression level, from 0 (uncompressed) to 9 (best)
+  -u         Output uncompressed data (equivalent to -l 0)
+  -m INT     Set maximum memory per thread; suffix K/M/G recognized [768M]
+  -M         Use minimiser for clustering unaligned/unplaced reads
+  -K INT     Kmer size to use for minimiser [20]
+  -n         Sort by read name (not compatible with samtools index command)
+  -t TAG     Sort by value of TAG. Uses position as secondary index (or read name if -n is set)
+  -o FILE    Write final output to FILE rather than standard output
+  -T PREFIX  Write temporary files to PREFIX.nnnn.bam
+  --no-PG    do not add a PG line
+      --input-fmt-option OPT[=VAL]
+               Specify a single input file format option in the form
+               of OPTION or OPTION=VALUE
+  -O, --output-fmt FORMAT[,OPT[=VAL]]...
+               Specify output format (SAM, BAM, CRAM)
+      --output-fmt-option OPT[=VAL]
+               Specify a single output file format option in the form
+               of OPTION or OPTION=VALUE
+      --reference FILE
+               Reference sequence FASTA FILE [null]
+  -@, --threads INT
+               Number of additional threads to use [0]
+      --write-index
+               Automatically index the output files [off]
+      --verbosity INT
+               Set level of verbosity
