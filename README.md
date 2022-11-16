@@ -15,7 +15,10 @@
     - need a completely unfiltered map file, with the full list of 220k SNPs.
     - `CIGENE_220K_SNPlocation_majorminor.txt` Even better, has the relevant info for the alleles so no ped file needed!
     - COLUMNS: POS MAJOR   MINOR   CHR INDEX   SNP
+
 [] confirm the major minor order above, I'm suspicious about it so emailed Tony for double check of that assumption.
+    - confirmed, I looked at the PED/MAP file from my work on the AS introgression and they all matched up (some were reverse comliments as per quirk mentioned below, but major/minor order held.)
+
 
 [] - build a key / dictonary file with the names of the chromosomes from the three files, make sure they're matched unambigiously
     OLD_genome_chr_names.txt, NEW_genome_chr_names.txt, and unique of `CIGENE_220K_SNPlocation_majorminor.txt` CHR
@@ -30,9 +33,12 @@
         - Will need to handle the new scaffolds as well, placing things onto CHR 30
             -probably just want a function to do this.
 
-[] - spot checks to make sure the SNPs are where the fasta says they are
-    - make sure major allele is sitting at the 101st or 36th base pair depending on the two categories
-
+[x] - spot checks to make sure the SNPs are where the fasta says they are
+    - make sure major allele is sitting at the 101st or XXth base pair depending on the two categories
+        - the alleles all match as expected for the 201 length sequences
+        - found out that all the affy probes aren't at the 36th spot, changed code and output to address this. Checked after and all in the right spot
+        - some of the alleles and sequences I have here are the reverse compliment of the primers and the SNP alleles used in the affy file (and the ped file.) This seems fine though as its just reverse compliments
+        - 
 [] - run bwa (on sharcnet), aligning the fasta file from previous step to the v3 genome
 
 [] - use SNP-placer to get the updated position file in .vcf format.
