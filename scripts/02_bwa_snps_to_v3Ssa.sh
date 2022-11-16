@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=0-02:00 # time (DD-HH:MM)
+#SBATCH --time=0-12:00 # time (DD-HH:MM)
 #SBATCH --job-name=bwa_mem_v_genome
 #SBATCH --output=logs/bwa_mem_v_genome_%J.out
 #SBATCH --cpus-per-task=32
@@ -37,7 +37,7 @@ if [ ! -d $outfolder ]; then
 fi
 
 #index the reference file
-bwa index $genome_file
+#bwa index $genome_file
 
 bam_outfile=$outfolder$out_file".bam";	 # the name of the .bam output
 bam_sorted_outfile=$outfolder$out_file".sorted.bam";	 # the name of the .bam output
