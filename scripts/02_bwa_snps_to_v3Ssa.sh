@@ -5,9 +5,6 @@
 #SBATCH --cpus-per-task=32
 #SBATCH --mem=125G
 
-#add the scripts folder to the search path
-export PATH="$PATH:$(pwd)/bin"
-
 echo "loading necessary modules"
 module load StdEnv/2020  
 module load gcc/9.3.0   
