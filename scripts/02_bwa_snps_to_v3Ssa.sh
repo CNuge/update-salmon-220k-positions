@@ -29,15 +29,15 @@ echo "number of cores being used: $cores";
 echo "writing outputs to folder: $out_folder"
 
 #build the output folder if non existant
-if [ ! -d $outfolder ]; then
-  mkdir -p $outfolder;
+if [ ! -d $out_folder ]; then
+  mkdir -p $out_folder;
 fi
 
 #index the reference file
 #bwa index $genome_file
 
-sam_outfile=$outfolder$out_file".sam";	 # the name of the .bam output
-sam_sorted_outfile=$outfolder$out_file".sorted.sam";	 # the name of the .bam output
+sam_outfile=$out_folder$out_file".sam";	 # the name of the .bam output
+sam_sorted_outfile=$out_folder$out_file".sorted.sam";	 # the name of the .bam output
 
 echo "saving data to file:" $sam_outfile;
 
