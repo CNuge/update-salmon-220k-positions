@@ -1,0 +1,19 @@
+loading necessary modules
+
+Lmod is automatically replacing "intel/2020.1.217" with "gcc/9.3.0".
+
+
+Lmod is automatically replacing "intel/2020.1.217" with "gcc/9.3.0".
+
+path to the genome file: ../data/NEW-GCF_905237065.1_Ssal_v3.1_genomic.fna
+path to the snp fasta file to be processed: ../data/snp_sequence_records_220k.fasta
+number of cores being used: 32
+writing outputs to folder: ../data/alignment_outputs/
+saving data to file: ../data/alignment_outputs/220ksnps_align_v3_ssa_genome.sam
+[M::bwa_idx_load_from_disk] read 0 ALT contigs
+[M::process] read 440000 sequences (87948722 bp)...
+[M::mem_process_seqs] Processed 440000 reads in 113.409 CPU sec, 4.002 real sec
+[main] Version: 0.7.17-r1188
+[main] CMD: bwa mem -t 32 ../data/NEW-GCF_905237065.1_Ssal_v3.1_genomic.fna ../data/snp_sequence_records_220k.fasta
+[main] Real time: 13.869 sec; CPU: 119.764 sec
+[bam_sort_core] merging from 0 files and 32 in-memory blocks...
