@@ -37,7 +37,7 @@ if [ ! -d $outfolder ]; then
 fi
 
 #index the reference file
-bwa index $genome_file
+#bwa index $genome_file
 
 bam_outfile=$outfolder$out_file".bam";	 # the name of the .bam output
 bam_sorted_outfile=$outfolder$out_file".sorted.bam";	 # the name of the .bam output
