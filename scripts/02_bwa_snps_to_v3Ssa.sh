@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=0-12:00 # time (DD-HH:MM)
+#SBATCH --time=0-03:00 # time (DD-HH:MM)
 #SBATCH --job-name=bwa_mem_v_genome
 #SBATCH --output=logs/bwa_mem_v_genome_%J.out
 #SBATCH --cpus-per-task=32
@@ -39,15 +39,15 @@ fi
 #index the reference file
 #bwa index $genome_file
 
-bam_outfile=$outfolder$out_file".bam";	 # the name of the .bam output
-bam_sorted_outfile=$outfolder$out_file".sorted.bam";	 # the name of the .bam output
+sam_outfile=$outfolder$out_file".sam";	 # the name of the .bam output
+sam_sorted_outfile=$outfolder$out_file".sorted.sam";	 # the name of the .bam output
 
-echo "saving data to file:" $bam_outfile;
+echo "saving data to file:" $sam_outfile;
 
 #burrows wheeler mem alignment to reference genome and output sorting with samtools
-bwa mem -t $cores $genome_file $snp_file | samtools view -bS - > $bam_outfile
+bwa mem -t $cores $genome_file $snp_file > $sam_outfile
 
-samtools sort $bam_outfile -o $bam_sorted_outfile -T $f -@ $cores -m 3G;
+samtools sort $sam_outfile -o $sam_sorted_outfile -T $f -@ $cores -m 3G;
 
 #bwa mem:
 #-t #threads
