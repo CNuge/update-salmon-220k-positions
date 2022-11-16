@@ -44,7 +44,7 @@ echo "saving data to file:" $sam_outfile;
 #burrows wheeler mem alignment to reference genome and output sorting with samtools
 bwa mem -t $cores $genome_file $snp_file > $sam_outfile
 
-samtools sort $sam_outfile -o $sam_sorted_outfile -T $f -@ $cores -m 3G;
+samtools sort $sam_outfile -o $sam_sorted_outfile -T "tmp" -@ $cores -m 3G;
 
 #bwa mem:
 #-t #threads
