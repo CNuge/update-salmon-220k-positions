@@ -32,13 +32,13 @@ def build_placed_snp_seqs(snp_data, affy_70mer_data, genome):
             #get the 70mer from the affy data
             affy_entry = affy_70mer_data[affy_70mer_data['SNP'] == data['SNP']].iloc[0].to_dict()            
             try:
-                snp_seq, major, minor = affy_to_major_seq(affy_entry['Flank'])
+                snp_seq, major, minor, snp_pos = affy_to_major_seq(affy_entry['Flank'])
                 snp_out_data[data['SNP']] = {
                     'seq' : snp_seq,
                     'index' : data['INDEX'],
                     'major' : major,
                     'minor' : minor,
-                    'snp_pos': 36,} #35 leading, snp, 34 trailing is the format
+                    'snp_pos': snp_pos,} #NB - some larger sequences, so can't hard code positon!
             except:
                 bad_snps.append(data)
     return snp_out_data, bad_snps

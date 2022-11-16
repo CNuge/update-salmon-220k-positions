@@ -34,15 +34,19 @@ def build_genome_dict(genome_list):
 
 #seq = 'AGATCAAGGGTCCAGTGAGAGATCAGACGTGTGAC[C/T]GGAAACTGGAAACTTACACTTCTGAGGAGGGGGG'
 def affy_to_major_seq(seq):
-    """Take in an affymetrix formatted 70mer and convert to a standard DNA string format.
+    """Take in an affymetrix formatted 70+mer and convert to a standard DNA string format.
         Returns the new string and the associated major and minor alleles.
         
-        First allele is minor, second is major."""
+        First allele is minor, second is major.
+        
+        Returns:
+        output_sequence, major_allele, minor_allele, snp_pos
+        where SNP pos is the location in the sequence where the snp is found (1 indexed)"""
 
     #split on: [ ] and /
     s1, minor, major, s2 = re.split('\[|\]|\/', seq)
     outseq = s1+major+s2
-    return outseq, major, minor
+    return outseq, major, minor, len(s1)+1
 
 
 """

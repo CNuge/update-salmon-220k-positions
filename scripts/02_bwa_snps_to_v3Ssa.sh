@@ -48,9 +48,9 @@ echo "saving data to file:" $bam_outfile;
 bwa mem -t $cores $genome_file $snp_file | samtools view -bS - > $bam_outfile
 
 samtools sort $bam_outfile -o $bam_sorted_outfile -T $f -@ $cores -m 3G;
-#bwa mem
+
+#bwa mem:
 #-t #threads
-#-R #read group header line, way of specifying the individual of origin
-#samtools
+#samtools:
 #@T gives number of threads, -m 3G gives the maximum mempry per thread (currently hardcoded, increase)
 
