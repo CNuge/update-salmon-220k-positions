@@ -16,7 +16,7 @@
     - `CIGENE_220K_SNPlocation_majorminor.txt` Even better, has the relevant info for the alleles so no ped file needed!
     - COLUMNS: POS MAJOR   MINOR   CHR INDEX   SNP
 
-[] confirm the major minor order above, I'm suspicious about it so emailed Tony for double check of that assumption.
+[x] confirm the major minor order above, I'm suspicious about it so emailed Tony for double check of that assumption.
     - confirmed, I looked at the PED/MAP file from my work on the AS introgression and they all matched up (some were reverse comliments as per quirk mentioned below, but major/minor order held.)
 
 
@@ -39,9 +39,13 @@
         - found out that all the affy probes aren't at the 36th spot, changed code and output to address this. Checked after and all in the right spot
         - some of the alleles and sequences I have here are the reverse compliment of the primers and the SNP alleles used in the affy file (and the ped file.) This seems fine though as its just reverse compliments
         - 
-[] - run bwa (on sharcnet), aligning the fasta file from previous step to the v3 genome
+
+[x] - run bwa (on sharcnet), aligning the fasta file from previous step to the v3 genome
+
+[] - explore the output sam file a bit, make sure all is in order as expected!
 
 [] - use SNP-placer to get the updated position file in .vcf format.
+    - may need the map of IDs to numbers for the v3 Ssa designations
 
 [] - take the relevant information from the SNP-placer outputs vcfs and make a new map file
     - as part of this, make a new 'exclude_v3_genome.tsv' file that can be used to pull SNPs from the PED files using plink 
