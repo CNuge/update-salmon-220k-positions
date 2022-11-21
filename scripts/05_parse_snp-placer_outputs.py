@@ -20,10 +20,12 @@ if __name__ == "__main__":
 
     """ read in the vcf, convert to a map file"""
 
-    v3_vcf_df = pd.read_csv(NEW_VCF_POS, sep = '\t')
+    v3_vcf_df = pd.read_csv(NEW_VCF_POS, sep = "\t")
+
 
     """ read in the list of SNPs (input to snp-placer), find those that were not on the chromosomes and 
         add to the end of the new map file as chr 30"""
+    snp_seq_df = pd.read_csv(SNP_SEQ_RECORDS, sep = "\t")
 
 
     """ read  in the old map file, do a comparison of the new snp positions to the old
