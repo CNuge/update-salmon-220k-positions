@@ -56,6 +56,11 @@
 [] - from here, carry the new information through to the salmon pop gen work, redoing the manhattan plots for the Fst, the LD calculations, and anything else required.
     -need to double check the orders of the SNPs, sort the final map file by their original positions (so that no weird bugs get introduced)
 
+[] - for any SNPs that end up unplaced, or placed onto 2+ locations, make them "CHR30" in the output.
+
+[] - repeat the alignment and SNP processing for a North American genome version
+    - have a second set of SNP positions, can compare and contrast the two to understand the role of the chr differences across the Atlantic in some of the results we have.
+    - Talk to Ian/Tony and make sure that we've got the best version of the genome to call the ground truth.
 
 ## Things to test for / keep an eye on
 
