@@ -32,6 +32,11 @@ if __name__ == "__main__":
     v3_vcf_df["CHR"] = v3_vcf_df["#CHROM"].apply(lambda x: v3_chr_name_map[x])
     v3_vcf_df["ZERO"] = 0
 
+    dedup_v3_vcf_df = v3_vcf_df[[x not in dup_snps for x in v3_vcf_df["SNP"].values]]
+    dedup_v3_vcf_df[['#CHROM', 'POS', 'ID', 'REF', 'ALT', 'QUAL', 'FILTER', 'INFO']].to_csv(
+        "../data/no_duplicates_v3_genome_locations.vcf", sep = "\t", index = False)
+
+
     map_file_output = v3_vcf_df[["CHR", "SNP", "ZERO", "POS"]]
 
     """ read in the list of SNPs (input to snp-placer), find those that were not on the chromosomes and 
