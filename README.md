@@ -42,16 +42,21 @@
 
 [x] - run bwa (on sharcnet), aligning the fasta file from previous step to the v3 genome
 
-[] - explore the output sam file a bit, make sure all is in order as expected!
+[x] - explore the output sam file a bit, make sure all is in order as expected!
 
-[] - use SNP-placer to get the updated position file in .vcf format.
+[x] - use SNP-placer to get the updated position file in .vcf format.
     - may need the map of IDs to numbers for the v3 Ssa designations
 
-[] - take the relevant information from the SNP-placer outputs vcfs and make a new map file
+[x] - take the relevant information from the SNP-placer outputs vcfs and make a new map file
     - as part of this, make a new 'exclude_v3_genome.tsv' file that can be used to pull SNPs from the PED files using plink 
 
-[] - generate some summary stats regarding the number of ambigious and unambigous SNP positions in the new genome
+[x] - generate some summary stats regarding the number of ambigious and unambigous SNP positions in the new genome
         - how many SNPs are lost, of these how many were due to no placement and how many were due to multiple placements
+
+[x] NEW FILES:
+    data/no_duplicates_v3_genome_locations.vcf - missing hadful of unmapped SNPs
+    data/Ssa220K_v3_Genome.map - all 220K, extras moved to chr 30 along with the contigs
+
 
 [] - from here, carry the new information through to the salmon pop gen work, redoing the manhattan plots for the Fst, the LD calculations, and anything else required.
     -need to double check the orders of the SNPs, sort the final map file by their original positions (so that no weird bugs get introduced)
